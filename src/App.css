@@ -1,0 +1,11 @@
+.classroom {
+  width: 25% !important;
+  display: inline-block !important;
+  margin: 2% 2% !important;
+  height: 90px;
+}
+
+.btn-new {
+  text-align: right;
+  padding-right: 9%;
+}
