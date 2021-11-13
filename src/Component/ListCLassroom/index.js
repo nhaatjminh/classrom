@@ -2,22 +2,31 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import Classroom from '../Classroom';
+import DetailClass from '../DetailClass'
 
+import {Link} from 'react-router-dom'
 export default class ListClassRoom extends Component {
     constructor(props){
         super(props);
         this.state = {
             arrayClassRoom:[],
             show: false,
-            name: ""
-        }
-        
+            name: "",
+            showDetail: false,
+            showDetailData: {}
+        }      
     }
 
     listClassRoom = (listCls) => {
-        return listCls.map((ele) => <Classroom key={ele.id} dataClass={ele}/>)
+        return listCls.map((ele) => <Classroom key={ele.id} dataClass={ele} onClick={() => {
+            
+            this.setState({
+                showDetail: true,
+                showDetailData: ele
+            });
+            <Link to="/detail">Detail</Link>}
+        }/>)
     }
-
     componentWillMount(){
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
@@ -65,43 +74,54 @@ export default class ListClassRoom extends Component {
         this.props.onLogoutSuccess();
         console.log("Logout success");
     }
-
+    backToList = () => {
+        this.setState({
+            showDetail: false,
+            showDetailData: {}
+        })
+    }
     render(){
         return(
-        <div className="p-3">
-            <div className="btn-logout">
-                <button className="btn btn-success" onClick={this.logout}> Logout </button>
-            </div>
-            <div className="btn-new">
-                <button className="btn btn-success" onClick={this.onHandleShow}> New Class </button>
-            </div>
-            <div className="text-center">
-                {this.listClassRoom(this.state.arrayClassRoom)}
-            </div>
+            <div>
+            { this.state.showDetail ?
+                <DetailClass  dataDetail={this.state.showDetailData} backToList={this.backToList}/>
+                :
+                <div className="p-3">
+                    <div className="btn-logout">
+                        <button className="btn btn-success" onClick={this.logout}> Logout </button>
+                    </div>
+                    <div className="btn-new">
+                        <button className="btn btn-success" onClick={this.onHandleShow}> New Class </button>
+                    </div>
+                    <div className="text-center">
+                        {this.listClassRoom(this.state.arrayClassRoom)}
+                    </div>
 
-            <Modal show={this.state.show} onHide={this.onHandleClose}>
-                <Modal.Header closeButton>
-                <Modal.Title>Adding Classroom</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <form onSubmit={this.onSubmitHandler} action="https://best-classroom-ever-api.herokuapp.com/classes" method="POST">
-                        <div className="row">
-                            <div className="col-9">
-                                <input type="text" name="name" className="form-control" placeholder="New class name..." onChange={this.onChangeHandler} />
-                            </div>
-                            <div className="col">
-                                <button type="submit" className="btn btn-success"> Add Class </button>
-                            </div>
+                    <Modal show={this.state.show} onHide={this.onHandleClose}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Adding Classroom</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <form onSubmit={this.onSubmitHandler} action="https://best-classroom-ever-api.herokuapp.com/classes" method="POST">
+                                <div className="row">
+                                    <div className="col-9">
+                                        <input type="text" name="name" className="form-control" placeholder="New class name..." onChange={this.onChangeHandler} />
+                                    </div>
+                                    <div className="col">
+                                        <button type="submit" className="btn btn-success"> Add Class </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <div onClick={this.onHandleClose}>
+                            <button className="btn btn-dark" onClick={this.onHandleShow}> Close </button>
                         </div>
-                    </form>
-                </Modal.Body>
-                <Modal.Footer>
-                <div onClick={this.onHandleClose}>
-                    <button className="btn btn-dark" onClick={this.onHandleShow}> Close </button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
-                </Modal.Footer>
-            </Modal>
-        </div>
+            }
+            </div>
         )
     }
 }

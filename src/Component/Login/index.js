@@ -4,11 +4,13 @@ import {Avatar, Button, Grid, Paper, TextField, Typography} from '@material-ui/c
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ListClassRoom from "../ListCLassroom";
 
+import './index.css';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 const Login = () => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [isLogin, setIsLogin] = useState(localStorage.getItem("token") != null)
-
     const paperStyle = {
         padding: 20,
         height: '70vh',
@@ -28,7 +30,74 @@ const Login = () => {
     const handleOnchangePassword = (e) => {
         setPassword(e.target.value);
     }
+    const responseFacebook = response => {
+        console.log(response);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
 
+        var raw = JSON.stringify({
+            "id_token": response.accessToken
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw
+        };
+
+        // fetch("https://best-classroom-ever-api.herokuapp.com/login", requestOptions)
+        fetch("http://localhost:5000/auth/facebook-sign-in", requestOptions)
+            .then(response => {
+                console.log(response)
+                if (response.ok) {
+                    return response.json();
+                }
+
+                throw Error(response.status);
+            })
+            .then(result => {
+                console.log(result)
+                localStorage.setItem("token", result.token);
+                setIsLogin(true);
+            })
+            .catch(error => {
+                console.log('error', error)
+            });
+    }
+    const onSuccessGoogle = response => {
+        console.log(response);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "id_token": response.tokenId
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw
+        };
+
+        // fetch("https://best-classroom-ever-api.herokuapp.com/login", requestOptions)
+        fetch("http://localhost:5000/auth/google-sign-in", requestOptions)
+            .then(response => {
+                console.log(response)
+                if (response.ok) {
+                    return response.json();
+                }
+
+                throw Error(response.status);
+            })
+            .then(result => {
+                console.log(result)
+                localStorage.setItem("token", result.token);
+                setIsLogin(true);
+            })
+            .catch(error => {
+                console.log('error', error)
+            });
+    }
     const login = () => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -88,6 +157,21 @@ const Login = () => {
                     <Link to="/register"> Sign Up
                     </Link>
                 </Typography>
+                <FacebookLogin
+                    appId="842222179779996"
+                    fields="name,picture,email"
+                    autoLoad = {false}
+                    cssClass="btnFacebook"
+                    textButton = "Sign In with Facebook"                                                                
+                    callback={responseFacebook} />
+                <br></br>
+                < GoogleLogin
+                    clientId="176406720657-kvkukhtjlamdlv6cnc1vg8qanluodo33.apps.googleusercontent.com"
+                    buttonText="Sign In with Google"
+                    onSuccess={onSuccessGoogle}
+                    isSignedIn={false}
+                    className="btnGoogle"
+                />
             </Paper>
         </Grid>
         }
