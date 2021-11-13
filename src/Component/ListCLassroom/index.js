@@ -13,18 +13,17 @@ export default class ListClassRoom extends Component {
             show: false,
             name: "",
             showDetail: false,
-            showDetailData: {}
+            detailClassID: -1
         }      
     }
 
     listClassRoom = (listCls) => {
         return listCls.map((ele) => <Classroom key={ele.id} dataClass={ele} onClick={() => {
-            
             this.setState({
                 showDetail: true,
-                showDetailData: ele
+                detailClassID: ele.id
             });
-            <Link to="/detail">Detail</Link>}
+        }
         }/>)
     }
     componentWillMount(){
@@ -77,14 +76,14 @@ export default class ListClassRoom extends Component {
     backToList = () => {
         this.setState({
             showDetail: false,
-            showDetailData: {}
+            DetailClassID: -1
         })
     }
     render(){
         return(
             <div>
             { this.state.showDetail ?
-                <DetailClass  dataDetail={this.state.showDetailData} backToList={this.backToList}/>
+                <DetailClass detailClassID={this.state.detailClassID} backToList={this.backToList}/>
                 :
                 <div className="p-3">
                     <div className="btn-logout">
