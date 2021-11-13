@@ -44,9 +44,8 @@ const Login = () => {
             headers: myHeaders,
             body: raw
         };
-
-        // fetch("https://best-classroom-ever-api.herokuapp.com/login", requestOptions)
-        fetch("http://localhost:5000/auth/facebook-sign-in", requestOptions)
+        //fetch("http://localhost:5000/auth/facebook-sign-in", requestOptions)
+        fetch("https://best-classroom-ever-api.herokuapp.com/facebook-sign-in", requestOptions)
             .then(response => {
                 console.log(response)
                 if (response.ok) {
@@ -78,9 +77,8 @@ const Login = () => {
             headers: myHeaders,
             body: raw
         };
-
-        // fetch("https://best-classroom-ever-api.herokuapp.com/login", requestOptions)
-        fetch("http://localhost:5000/auth/google-sign-in", requestOptions)
+//fetch("http://localhost:5000/auth/google-sign-in", requestOptions)
+        fetch("https://best-classroom-ever-api.herokuapp.com/auth/google-sign-in", requestOptions)
             .then(response => {
                 console.log(response)
                 if (response.ok) {
