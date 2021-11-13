@@ -45,7 +45,7 @@ const Login = () => {
             body: raw
         };
         //fetch("http://localhost:5000/auth/facebook-sign-in", requestOptions)
-        fetch("https://best-classroom-ever-api.herokuapp.com/facebook-sign-in", requestOptions)
+        fetch("https://best-classroom-ever-api.herokuapp.com/auth/facebook-sign-in", requestOptions)
             .then(response => {
                 console.log(response)
                 if (response.ok) {
