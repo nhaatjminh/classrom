@@ -9,7 +9,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
-      <Route path='/detail' element={<DetailClass/>}/>
+      <Route path='/classes/detail/:id' element={<DetailClass/>}/>
     </Routes>
 
   );

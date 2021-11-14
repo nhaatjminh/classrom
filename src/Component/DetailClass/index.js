@@ -1,17 +1,19 @@
 
-import React, { Component} from 'react';
-import { NavLink } from "react-router-dom"
+import React, { useState} from 'react';
+import { NavLink, useParams} from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar } from "react-bootstrap"
 import './index.css'
-export default class DetailClass extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: ""
-        }  
-    }
-    getDetail = (id) => {
+const DetailClass = () => {
+    const [data, setData] = useState({
+            creator: "",
+            description: "",
+            id: -1,
+            name: "",
+            timeCreate: "" 
+        });
+    let params = useParams();
+    const getDetail = async (id) => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
 
@@ -20,26 +22,28 @@ export default class DetailClass extends Component {
             headers: myHeaders
         };
 
-        fetch("https://best-classroom-ever-api.herokuapp.com/classes/detail/" + id, requestOptions)
+        await fetch("https://best-classroom-ever-api.herokuapp.com/classes/detail/" + id, requestOptions)
         .then(response => response.json())
         .then(result => {
-            this.setState({
-                data: result
+            setData({
+                creator: result.creator,
+                description: result.description,
+                id: result.id,
+                name: result.name,
+                timeCreate: result.timeCreate 
             })
         })
         .catch(error => {
             console.log('error', error);
-            this.logout();
         });
     }
-    render(){
-        this.getDetail(this.props.detailClassID);
-        return(
+    getDetail(params.id);
+    return(
             <div>
                 
                 <Navbar bg="dark" variant="dark">
                     
-                    <button className="btn btn-success backbtn" onClick={this.props.backToList}> Back </button>
+                    {/* <button className="btn btn-success backbtn" onClick={this.props.backToList}> Back </button> */}
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                     <NavLink className="nav-link" to="#" >
@@ -53,23 +57,23 @@ export default class DetailClass extends Component {
 
                 <div className="container mt-5">
                     <h1 className="text-center">
-                        Class: {this.state.data.name}
+                        Class: {data.name}
                     </h1>
                     <div className="mt-3">
-                        ID: {this.state.data.id}
+                        ID: {data.id}
                     </div>
                     <div className="mt-3">
-                        Class: {this.state.data.name}
+                        Class: {data.name}
                     </div>
                     <div className="mt-3">
-                        Creator: {this.state.data.creator}
+                        Creator: {data.creator}
                     </div>
                     <div className="mt-3">
-                        Description: {this.state.data.description}
+                        Description: {data.description}
                     </div>
                 </div>
             </div>
         
         )
-    }
 }
+export default DetailClass;

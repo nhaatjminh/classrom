@@ -2,29 +2,18 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import Classroom from '../Classroom';
-import DetailClass from '../DetailClass'
-
-import {Link} from 'react-router-dom'
 export default class ListClassRoom extends Component {
     constructor(props){
         super(props);
         this.state = {
             arrayClassRoom:[],
             show: false,
-            name: "",
-            showDetail: false,
-            detailClassID: -1
+            name: ""
         }      
     }
 
     listClassRoom = (listCls) => {
-        return listCls.map((ele) => <Classroom key={ele.id} dataClass={ele} onClick={() => {
-            this.setState({
-                showDetail: true,
-                detailClassID: ele.id
-            });
-        }
-        }/>)
+        return listCls.map((ele) => <Classroom key={ele.id} dataClass={ele}/>)
     }
     componentWillMount(){
         var myHeaders = new Headers();
@@ -73,18 +62,9 @@ export default class ListClassRoom extends Component {
         this.props.onLogoutSuccess();
         console.log("Logout success");
     }
-    backToList = () => {
-        this.setState({
-            showDetail: false,
-            DetailClassID: -1
-        })
-    }
     render(){
         return(
             <div>
-            { this.state.showDetail ?
-                <DetailClass detailClassID={this.state.detailClassID} backToList={this.backToList}/>
-                :
                 <div className="p-3">
                     <div className="btn-logout">
                         <button className="btn btn-success" onClick={this.logout}> Logout </button>
@@ -119,7 +99,6 @@ export default class ListClassRoom extends Component {
                         </Modal.Footer>
                     </Modal>
                 </div>
-            }
             </div>
         )
     }
