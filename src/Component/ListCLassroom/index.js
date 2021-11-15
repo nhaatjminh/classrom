@@ -45,6 +45,7 @@ export default class ListClassRoom extends Component {
         await fetch("https://best-classroom-ever-api.herokuapp.com/classes", {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({name: this.state.name}) // body data type must match "Content-Type" header

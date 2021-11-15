@@ -135,7 +135,29 @@ const Login = () => {
     const onLogoutSuccess = () => {
         setIsLogin(false);
     }
+    const PostData = async (tokenLink, tokenAccount) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
 
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders
+        };
+
+        await fetch("http://localhost:5000/classes/acceptlink/" + tokenLink + "/" + tokenAccount, requestOptions)
+        .then(response => response.json())
+        .catch(error => {
+            console.log('error', error);
+        });
+    }
+    const AcceptClass = () => {
+        let tokenLink = localStorage.getItem("tokenLink");
+        if (tokenLink && isLogin) {
+            let tokenAccount = localStorage.getItem("token")
+            PostData(tokenLink, tokenAccount);
+        }
+    }
+    AcceptClass();
     return (
         <div>
         { isLogin ?
