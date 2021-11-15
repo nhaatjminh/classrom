@@ -144,8 +144,15 @@ const Login = () => {
             headers: myHeaders
         };
 
-        await fetch("http://localhost:5000/classes/acceptlink/" + tokenLink + "/" + tokenAccount, requestOptions)
-        .then(response => response.json())
+        await fetch("http://best-classroom-ever-api.herokuapp.com/classes/acceptlink/" + tokenLink + "/" + tokenAccount, requestOptions)
+        .then(response => {
+            response.json(); 
+            localStorage.removeItem("tokenLink");
+            
+            window.location.pathname ='/';
+            
+            window.location.reload();
+        })
         .catch(error => {
             console.log('error', error);
         });

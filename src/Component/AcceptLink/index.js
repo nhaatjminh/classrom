@@ -1,11 +1,9 @@
 
-import {React, useEffect, useState} from 'react';
+import {React, useEffect} from 'react';
 import {  useParams} from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ListClassRoom from '../ListCLassroom';
 import Login from '../Login';
 const AcceptLink = () => {
-    const [haveTokenAccount, setHaveTokenAccount] = useState(false);
     const params = useParams();
     const tokenAccount = localStorage.getItem("token");
     const tokenLink = params.tokenlink;
@@ -17,9 +15,13 @@ const AcceptLink = () => {
             method: 'GET',
             headers: myHeaders
         };
-
-        await fetch("http://localhost:5000/classes/acceptlink/" + tokenLink + "/" + tokenAccount, requestOptions)
-        .then(response => response.json())
+//"http://best-classroom-ever-api.herokuapp.com/classes/acceptlink/"
+        await fetch("http://best-classroom-ever-api.herokuapp.com/classes/acceptlink/" + tokenLink + "/" + tokenAccount, requestOptions)
+        .then(response => {
+            response.json(); 
+            localStorage.removeItem("tokenLink");
+            window.location.pathname ='/';
+        })
         .catch(error => {
             console.log('error', error);
         });
@@ -27,10 +29,9 @@ const AcceptLink = () => {
     const CheckToken = () => {
         if (tokenAccount) {
             PostData();
-            setHaveTokenAccount(true);
         }
         else {
-            setHaveTokenAccount(false);
+            window.location.pathname ='/';
             localStorage.setItem("tokenLink", params.tokenlink);
         }
     }
@@ -40,9 +41,7 @@ const AcceptLink = () => {
     
     return(
         <div>
-            {haveTokenAccount ?
-            <ListClassRoom></ListClassRoom> : 
-            <Login></Login>} 
+            <Login></Login>
         </div>
         )
 }
