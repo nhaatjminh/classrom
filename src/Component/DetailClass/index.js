@@ -108,7 +108,7 @@ const DetailClass = () => {
             redirect: 'follow'
         };
 
-        await fetch("http://localhost:5000/sendEmail", requestOptions)
+        await fetch("https://best-classroom-ever-api.herokuapp.com/sendEmail", requestOptions)
         .then(response => {
             if (response.ok) {
                 return response.json();
