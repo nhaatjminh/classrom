@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Classroom from '../Classroom';
 
-const ListClassRoom = () => {
+const ListClassRoom = ({onLogoutSuccess}) => {
 
     const [arrayClassRoom, setAarrayClassRoom] = useState([]);
     let isLoadedList = false;
@@ -29,13 +29,13 @@ const ListClassRoom = () => {
         })
         .catch(error => {
             console.log('error', error);
-            this.logout();
+            logout();
         });
     }   
 
     const logout = () => {
         localStorage.removeItem("token");
-        // onLogoutSuccess();
+        onLogoutSuccess();
         console.log("Logout success");
     }
 
