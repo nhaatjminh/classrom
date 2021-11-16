@@ -82,7 +82,7 @@ const DetailClass = () => {
                     <NavLink className="nav-link" to="#" >
                         Detail
                     </NavLink>
-                    <NavLink className="nav-link" to="/" >
+                    <NavLink className="nav-link" to='/classes/members/{params.id}' >
                         People
                     </NavLink>
                     </Navbar.Collapse>
