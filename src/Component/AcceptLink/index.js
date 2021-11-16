@@ -16,7 +16,7 @@ const AcceptLink = () => {
             headers: myHeaders
         };
 //"http://best-classroom-ever-api.herokuapp.com/classes/acceptlink/"
-        await fetch("http://best-classroom-ever-api.herokuapp.com/classes/acceptlink/" + tokenLink + "/" + tokenAccount, requestOptions)
+        await fetch("https://best-classroom-ever-api.herokuapp.com/classes/acceptlink/" + tokenLink + "/" + tokenAccount, requestOptions)
         .then(response => {
             response.json(); 
             localStorage.removeItem("tokenLink");
