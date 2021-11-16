@@ -2,7 +2,7 @@
 import React, { useState} from 'react';
 import { NavLink, useParams} from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar } from "react-bootstrap"
+import { Navbar, Modal } from "react-bootstrap"
 import './index.css'
 const DetailClass = () => {
     const [data, setData] = useState({
@@ -41,6 +41,9 @@ const DetailClass = () => {
             console.log('error', error);
         });
     }
+
+    const
+
     const getInviteLink = async (id,role) => { //truyen role vo day nhe bro
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
@@ -71,6 +74,7 @@ const DetailClass = () => {
         setLoadFirst(false);
     }
     getDetail(params.id);
+    const memberURL = '/classes/members/' + params.id;
     return(
             <div>
                 
@@ -82,7 +86,7 @@ const DetailClass = () => {
                     <NavLink className="nav-link" to="#" >
                         Detail
                     </NavLink>
-                    <NavLink className="nav-link" to='/classes/members/{params.id}' >
+                    <NavLink className="nav-link" to={memberURL}>
                         People
                     </NavLink>
                     </Navbar.Collapse>
@@ -122,6 +126,31 @@ const DetailClass = () => {
                         B
                         </div>
                     </div>
+                </div>
+
+                <div>
+                    <Modal show={this.state.show} onHide={this.onHandleClose}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Adding Classroom</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <form onSubmit={this.onSubmitHandler} action="https://best-classroom-ever-api.herokuapp.com/classes" method="POST">
+                                <div className="row">
+                                    <div className="col-9">
+                                        <input type="text" name="name" className="form-control" placeholder="New class name..." onChange={this.onChangeHandler} />
+                                    </div>
+                                    <div className="col">
+                                        <button type="submit" className="btn btn-success"> Add Class </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <div onClick={this.onHandleClose}>
+                            <button className="btn btn-dark" onClick={this.onHandleShow}> Close </button>
+                        </div>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             </div>
         
