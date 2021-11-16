@@ -10,8 +10,10 @@ const DetailClass = () => {
             description: "",
             id: -1,
             name: "",
-            timeCreate: "" 
+            timeCreate: "",
+            linkInvite: ""
         });
+    const [loadFirst, setLoadFirst] = useState(true);
     let params = useParams();
     const getDetail = async (id) => {
         var myHeaders = new Headers();
@@ -30,14 +32,18 @@ const DetailClass = () => {
                 description: result.description,
                 id: result.id,
                 name: result.name,
-                timeCreate: result.timeCreate 
+                timeCreate: result.timeCreate,
+                linkInvite: result.url
             })
         })
         .catch(error => {
             console.log('error', error);
         });
     }
-    getDetail(params.id);
+    if (loadFirst) {
+        getDetail(params.id);
+        setLoadFirst(false);
+    }
     return(
             <div>
                 
@@ -55,7 +61,7 @@ const DetailClass = () => {
                     </Navbar.Collapse>
                 </Navbar>
 
-                <div className="container mt-5">
+                <div className="container-fluid mt-5">
                     <h1 className="text-center">
                         Class: {data.name}
                     </h1>
@@ -70,6 +76,19 @@ const DetailClass = () => {
                     </div>
                     <div className="mt-3">
                         Description: {data.description}
+                    </div>
+                    <div className="mt-3">
+                        <div className="col-12">
+                            Link Invite: {data.linkInvite}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-5">
+                            A
+                        </div>
+                        <div className="col-3">
+                        B
+                        </div>
                     </div>
                 </div>
             </div>
