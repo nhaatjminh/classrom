@@ -3,6 +3,7 @@ import {React} from 'react';
 import {  useParams} from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from '../Login';
+
 const AcceptLink = () => {
     const params = useParams();
     const tokenAccount = localStorage.getItem("token");
@@ -45,4 +46,5 @@ const AcceptLink = () => {
         </div>
         )
 }
+
 export default AcceptLink;

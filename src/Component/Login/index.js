@@ -17,9 +17,11 @@ const Login = () => {
         width: 300,
         margin: "20px auto"
     }
+
     const avatarStyle = {
         backgroundColor: '#1bbd7e'
     }
+
     const buttonStyle = {
         margin: '10px 0'
     }
@@ -27,9 +29,11 @@ const Login = () => {
     const handleOnchangeUsername = (e) => {
         setUsername(e.target.value);
     }
+
     const handleOnchangePassword = (e) => {
         setPassword(e.target.value);
     }
+
     const responseFacebook = response => {
         console.log(response);
         var myHeaders = new Headers();
@@ -57,12 +61,14 @@ const Login = () => {
             .then(result => {
                 console.log(result)
                 localStorage.setItem("token", result.token);
+                localStorage.setItem("userId", result.user.id);
                 setIsLogin(true);
             })
             .catch(error => {
                 console.log('error', error)
             });
     }
+
     const onSuccessGoogle = response => {
         console.log(response);
         var myHeaders = new Headers();
@@ -77,6 +83,7 @@ const Login = () => {
             headers: myHeaders,
             body: raw
         };
+
 //fetch("http://localhost:5000/auth/google-sign-in", requestOptions)
         fetch("https://best-classroom-ever-api.herokuapp.com/auth/google-sign-in", requestOptions)
             .then(response => {
@@ -90,12 +97,14 @@ const Login = () => {
             .then(result => {
                 console.log(result)
                 localStorage.setItem("token", result.token);
+                localStorage.setItem("userId", result.user.id);
                 setIsLogin(true);
             })
             .catch(error => {
                 console.log('error', error)
             });
     }
+    
     const login = () => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -124,6 +133,7 @@ const Login = () => {
             .then(result => {
                 console.log(result)
                 localStorage.setItem("token", result.token);
+                localStorage.setItem("userId", result.user.id);
                 setIsLogin(true);
             })
             .catch(error => {

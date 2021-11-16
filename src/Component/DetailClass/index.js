@@ -151,7 +151,6 @@ const DetailClass = () => {
     const memberURL = '/classes/members/' + params.id;
     return(
             <div>
-                
                 <Navbar bg="dark" variant="dark">
                     
                     {/* <button className="btn btn-success backbtn" onClick={this.props.backToList}> Back </button> */}

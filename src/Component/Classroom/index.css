@@ -1,11 +1,27 @@
+.classroom {
+    width: 20% !important;
+    display: inline-block !important;
+    margin: 2% 2% !important;
+}
+
 .linkBtn {
     font: bold 15px Arial;
     text-decoration: none;
-    background-color: #EEEEEE;
-    color: #333333;
-    padding: 2px 6px 2px 6px;
-    border-top: 1px solid #CCCCCC;
-    border-right: 1px solid #333333;
-    border-bottom: 1px solid #333333;
-    border-left: 1px solid #CCCCCC;
+    background-color: rgb(187, 233, 187);
+    color: black;
+    padding: 5px 10px 5px 10px;
+    border-top: 2px solid #CCCCCC;
+    border-right: 2px solid #333333;
+    border-bottom: 2px solid #333333;
+    border-left: 2px solid #CCCCCC;
+    box-shadow: 1px 1px 1px #cac2c2;
+    border-radius: 5px;
+}
+
+.teacher{
+    font: 14px Arial;
+}
+
+.description {
+    font: 12px Arial;
 }
