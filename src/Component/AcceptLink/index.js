@@ -35,9 +35,9 @@ const AcceptLink = () => {
             localStorage.setItem("tokenLink", params.tokenlink);
         }
     }
-    useEffect(() => {
+    if(params.tokenLink !== "") {
         CheckToken();
-    })
+    }
     
     return(
         <div>
