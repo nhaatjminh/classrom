@@ -50,7 +50,7 @@ const DetailClass = () => {
             headers: myHeaders
         };
 
-        await fetch("https://best-classroom-ever-api.herokuapp.com/classes/invitelink/" + id + "/" + role, requestOptions)
+        await fetch("http://best-classroom-ever-api.herokuapp.com/classes/invitelink/" + id + "/" + role, requestOptions)
         // await fetch("http://localhost:5000/classes/invitelink/" + id + "/" + role, requestOptions)
         .then(response => response.json())
         .then(result => {
