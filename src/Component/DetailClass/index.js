@@ -27,6 +27,7 @@ const DetailClass = () => {
     const [showDialog, setShowDialog] = useState(false);
     const [email, setEmail] = useState("");
     const [roleInvite, setRoleInvite] = useState("Student");
+    const [userRole, setUserRole] = useState("student");
     let params = useParams();
     const getDetail = async (id) => {
         var myHeaders = new Headers();
@@ -127,6 +128,30 @@ const DetailClass = () => {
         });
     }
 
+    const getRole = async () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "classId": params.id
+            });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+            };
+
+        await fetch("https://best-classroom-ever-api.herokuapp.com/accounts/role/" + localStorage.getItem("userId"), requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            setUserRole(result[0].role)
+            console.log(result.role);
+        })
+        .catch(error => console.log('error', error));
+    }
     
 
     const onSubmitHandler = async (e) => {
@@ -147,6 +172,7 @@ const DetailClass = () => {
         getDetail(params.id);
         getInviteLink(params.id, 'student');
         getInviteLink(params.id, 'teacher');
+        getRole();
         setLoadFirst(false);
     }
     const memberURL = '/classes/members/' + params.id;
@@ -166,7 +192,9 @@ const DetailClass = () => {
                     </Navbar.Collapse>
                 </Navbar>
                 <div className="btn-new" style={{ margin: '10px 10px'}}>
-                        <button className="btn btn-success" onClick={onHandleShow}> Invite </button>
+                       {userRole == "teacher" ? 
+                       <button className="btn btn-success" onClick={onHandleShow}> Invite </button> :
+                       <></>} 
                 </div>
 
                 <div className="container-fluid mt-5">
