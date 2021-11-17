@@ -100,7 +100,8 @@ const DetailClass = () => {
         var raw = JSON.stringify({
             "recipient": recipient,
             "inviteLink": inviteLink,
-            "role": role
+            "role": role,
+            "classId": params.id
         });
 
         var requestOptions = {
