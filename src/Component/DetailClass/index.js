@@ -9,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {Typography} from '@material-ui/core'
 
 
 const DetailClass = () => {
@@ -164,7 +165,7 @@ const DetailClass = () => {
                     </NavLink>
                     </Navbar.Collapse>
                 </Navbar>
-                <div className="btn-new" style={{ margin: '10px 0'}}>
+                <div className="btn-new" style={{ margin: '10px 10px'}}>
                         <button className="btn btn-success" onClick={onHandleShow}> Invite </button>
                 </div>
 
@@ -185,14 +186,6 @@ const DetailClass = () => {
                         Description: {data.description}
                     </div>
                     
-                    <div className="row">
-                        <div className="col-5">
-                            A
-                        </div>
-                        <div className="col-3">
-                        B
-                        </div>
-                    </div>
                 </div>
 
                 <div>
@@ -202,15 +195,15 @@ const DetailClass = () => {
                         </Modal.Header>
                         <Modal.Body>
                             <form onSubmit={onSubmitHandler}>
-                                <div className="mt-3" fullWidth>
-                                    <div className="col-12">
+                                <div className="mt-3">
+                                    <Typography style={{wordWrap: 'break-word'}}>
                                         Link Invite Student: {inviteLinkStudent}
-                                    </div>
+                                    </Typography>
                                 </div>
-                                <div className="mt-3" fullWidth>
-                                    <div className="col-12">
+                                <div className="mt-3 mb-3">
+                                    <Typography style={{wordWrap: 'break-word'}}>
                                         Link Invite Teacher: {inviteLinkTeacher}
-                                    </div>
+                                    </Typography>
                                 </div>
                                 <div>
                                     <FormControl style={{width: 120, margin: '10px 0'}}>

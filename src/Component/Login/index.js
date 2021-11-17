@@ -7,7 +7,7 @@ import ListClassRoom from "../ListCLassroom";
 import './index.css';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
-const Login = () => {
+const Login = ({onLoginSuccess}) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [isLogin, setIsLogin] = useState(localStorage.getItem("token") != null)
@@ -63,6 +63,7 @@ const Login = () => {
                 localStorage.setItem("token", result.token);
                 localStorage.setItem("userId", result.user.id);
                 setIsLogin(true);
+                onLoginSuccess();
             })
             .catch(error => {
                 console.log('error', error)
@@ -99,13 +100,14 @@ const Login = () => {
                 localStorage.setItem("token", result.token);
                 localStorage.setItem("userId", result.user.id);
                 setIsLogin(true);
+                onLoginSuccess();
             })
             .catch(error => {
                 console.log('error', error)
             });
     }
     
-    const login = () => {
+    const login = async () => {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -121,7 +123,7 @@ const Login = () => {
             redirect: 'follow'
         };
 
-        fetch("https://best-classroom-ever-api.herokuapp.com/login", requestOptions)
+        await fetch("https://best-classroom-ever-api.herokuapp.com/login", requestOptions)
             .then(response => {
                 console.log(response)
                 if (response.ok) {
@@ -135,6 +137,8 @@ const Login = () => {
                 localStorage.setItem("token", result.token);
                 localStorage.setItem("userId", result.user.id);
                 setIsLogin(true);
+                onLoginSuccess();
+
             })
             .catch(error => {
                 console.log('error', error)

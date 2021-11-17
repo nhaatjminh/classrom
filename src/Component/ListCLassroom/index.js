@@ -47,9 +47,6 @@ const ListClassRoom = ({onLogoutSuccess}) => {
     return (
         <div>
             <div className="p-3">
-                <div className="btn-logout">
-                    <button className="btn btn-success" onClick={logout}> Logout </button>
-                </div>
                 <div>
                     {listClassRoom(arrayClassRoom)}
                 </div>
