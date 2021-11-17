@@ -7,15 +7,14 @@ import './index.css'
 const Profile = () => {
     let params = useParams();
     
-    const [userInfo, setUserInfo] = useState({
-        name: "",
-        phone: "",
-        address: ""
-    });
-    const [isEdit, setIsEdit] = useState(false);
-    const [textEditButton, setTextEditButton] = useState("Edit");
+    const [studentID, setStudentID] = useState("");
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+
     const [isLoadedInfo, setIsLoadedInfo] = useState(false);
-    
+    const [isOwner] = useState((params.id === localStorage.getItem("userId")));
+
     const paperStyle = {
         padding: 40,
         width: '90%',
@@ -35,61 +34,50 @@ const Profile = () => {
         await fetch("https://best-classroom-ever-api.herokuapp.com/accounts/" + params.id, requestOptions)
         .then(response => response.json())
         .then(result => {
-            setUserInfo(result.account[0]);
+            setStudentID(result.account[0].studentID);
+            setName(result.account[0].name);
+            setPhone(result.account[0].phone);
+            setAddress(result.account[0].address);
         })
         .catch(error => {
             console.log('error', error);
-            setUserInfo({
-                name: "",
-                phone: "",
-                address: ""
-            });
         });
     }
 
-    const editBtnOnClick = () => {
-        console.log(isEdit);
-        if (!isEdit) {
-            setIsEdit(true);
-            setTextEditButton("Save");
-        } else {
-            let myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+    const saveBtnOnClick = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-            let raw = JSON.stringify({
-                "name": userInfo.name,
-                "address": userInfo.address,
-                "phone": userInfo.phone,
-            });
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("studentID", studentID);
+        urlencoded.append("name", name);
+        urlencoded.append("address", address);
+        urlencoded.append("phone", phone);
 
-            let requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-            
-            fetch("https://best-classroom-ever-api.herokuapp.com/accounts/update", requestOptions)
-                .then(response => {
-                    if (response.ok) {
-                        alert("Account updated!")
-                        return response.json();
-                    }
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+        };
 
-                    throw Error(response.status);
-                })
-                .then(response => response.json())
-                .catch(error => {
-                    console.log('error', error)
-                    alert("Incorrect username or password!");
-                });
-        }
+        fetch("https://best-classroom-ever-api.herokuapp.com/accounts/update", requestOptions)
+        .then(response =>  response.text())
+        .then(result => {
+            alert("Updated!");
+            console.log(result);
+        })
+        .catch(error => {
+            alert("An error occur");
+            console.log('error', error)
+        });
     }
 
-
-	const nameOnChangeHandler = (e) => setUserInfo( userInfo.name = e.target.value);
-    const addressOnChangeHandler = (e) => setUserInfo( userInfo.address = e.target.value);
-    const phoneOnChangeHandler = (e) => setUserInfo( userInfo.phone = e.target.value);
+    const studentIDOnChangeHandler = (e) => setStudentID(e.target.value);
+	const nameOnChangeHandler = (e) => setName(e.target.value);
+    const addressOnChangeHandler = (e) => setAddress(e.target.value);
+    const phoneOnChangeHandler = (e) => setPhone(e.target.value);
 
     if (!isLoadedInfo) {
         loadUserInfo();
@@ -101,21 +89,26 @@ const Profile = () => {
             <Paper elevation={10} style ={paperStyle}>
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label> Student ID </Form.Label>
+                        <Form.Control type="text" value={studentID} disabled={!isOwner} onChange={studentIDOnChangeHandler} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label> Fullname </Form.Label>
-                        <Form.Control type="text" value={userInfo.name} disabled={!isEdit} onChange={nameOnChangeHandler} />
+                        <Form.Control type="text" value={name} disabled={!isOwner} onChange={nameOnChangeHandler} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label> Address </Form.Label>
-                        <Form.Control type="text" value={userInfo.address} disabled={!isEdit} onChange={addressOnChangeHandler} />
+                        <Form.Control type="text" value={address} disabled={!isOwner} onChange={addressOnChangeHandler} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label> Numberphone </Form.Label>
-                        <Form.Control type="text" value={userInfo.phone} disabled={!isEdit} onChange={phoneOnChangeHandler} />
+                        <Form.Control type="text" value={phone} disabled={!isOwner} onChange={phoneOnChangeHandler} />
                     </Form.Group>
-                    <div className="text-center">
-                        <button className="btn btn-dark btnEdit" onClick={editBtnOnClick}> {textEditButton} </button>
+                    <div className="text-center" hidden={!isOwner}>
+                        <button className="btn btn-dark btnEdit" onClick={saveBtnOnClick}> SAVE </button>
                     </div>
                 </Form>
             </Paper>

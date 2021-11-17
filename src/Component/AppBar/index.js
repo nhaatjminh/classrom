@@ -25,8 +25,6 @@ export default function TopNavBar({ brandName, onLogoutSuccess }) {
 	const onSubmitHandler = async(e) => {
 		e.preventDefault();
 
-    console.log("Clciked")
-
 		var myHeaders = new Headers();
 		myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
 		myHeaders.append("Content-Type", "application/json");
@@ -47,6 +45,7 @@ export default function TopNavBar({ brandName, onLogoutSuccess }) {
 			.then(response => {
 					console.log(response)
 					if (response.ok) {
+              window.location.reload();
 							return response.json();
 					}
 
@@ -68,7 +67,7 @@ export default function TopNavBar({ brandName, onLogoutSuccess }) {
     localStorage.removeItem("token");
     onLogoutSuccess();
     console.log("Location: " + location.pathname);
-    if (location.pathname != "/") {
+    if (location.pathname !== "/") {
       navigate("/")
     }
     else {

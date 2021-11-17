@@ -25,7 +25,6 @@ function App() {
     <div>
       { isLogin ? <TopNavBar brandName={""} onLogoutSuccess={onLogoutSuccess}></TopNavBar> : 
       <div></div>}
-      {/* <TopNavBar onLogout={"Brand",logout}></TopNavBar> */}
     <Routes>
       <Route path='/' element={<Login onLoginSuccess={onLoginSuccess}/>}/>
       <Route path='/register' element={<Register/>}/>
