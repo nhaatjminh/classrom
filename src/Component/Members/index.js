@@ -26,7 +26,7 @@ export default function MembersList() {
             redirect: 'follow'
         };
 
-        await fetch("http://best-classroom-ever-api.herokuapp.com/classes/members/" + idClass, requestOptions)
+        await fetch("https://best-classroom-ever-api.herokuapp.com/classes/members/" + idClass, requestOptions)
         .then(response => response.json())
         .then(result => {
             setStudents(result.students);
