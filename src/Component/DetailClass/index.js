@@ -143,11 +143,11 @@ const DetailClass = () => {
     }
 
     if (loadFirst) {
+        getDetail(params.id);
         getInviteLink(params.id, 'student');
         getInviteLink(params.id, 'teacher');
         setLoadFirst(false);
     }
-    getDetail(params.id);
     const memberURL = '/classes/members/' + params.id;
     return(
             <div>

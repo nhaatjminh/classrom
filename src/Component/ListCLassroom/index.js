@@ -5,7 +5,7 @@ import Classroom from '../Classroom';
 const ListClassRoom = ({onLogoutSuccess}) => {
 
     const [arrayClassRoom, setAarrayClassRoom] = useState([]);
-    let isLoadedList = false;
+    const [loadFirst, setLoadFirst] = useState(true);
 
     const listClassRoom = (listCls) => {
         return listCls.map((ele) => <Classroom key={ele.id} dataClass={ele}/>)
@@ -39,9 +39,9 @@ const ListClassRoom = ({onLogoutSuccess}) => {
         console.log("Logout success");
     }
 
-    if (!isLoadedList){
+    if (loadFirst){
         loadListClassRoom();
-        isLoadedList = true;
+        setLoadFirst(false);
     }
 
     return (
