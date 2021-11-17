@@ -148,6 +148,9 @@ const Login = ({onLoginSuccess}) => {
 
     const onLogoutSuccess = () => {
         setIsLogin(false);
+        window.location.pathname ='/'; 
+        window.location.reload();
+        localStorage.clear();
     }
     const PostData = async (tokenLink, tokenAccount) => {
         var myHeaders = new Headers();
