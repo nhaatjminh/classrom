@@ -36,7 +36,7 @@ const AcceptLink = () => {
             localStorage.setItem("tokenLink", params.tokenlink);
         }
     }
-    if(params.tokenLink !== "") {
+    if(params.tokenlink !== "") {
         CheckToken();
     }
     

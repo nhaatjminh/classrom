@@ -12,10 +12,9 @@ const Profile = () => {
         phone: "",
         address: ""
     });
-
-    let isLoadedInfo = false;
     const [isEdit, setIsEdit] = useState(false);
     const [textEditButton, setTextEditButton] = useState("Edit");
+    const [isLoadedInfo, setIsLoadedInfo] = useState(false);
     
     const paperStyle = {
         padding: 40,
@@ -94,7 +93,7 @@ const Profile = () => {
 
     if (!isLoadedInfo) {
         loadUserInfo();
-        isLoadedInfo = true;
+        setIsLoadedInfo(true);
     }
 
     return (
